@@ -2,88 +2,13 @@ import { useState } from "react";
 import { useGetAllProductsQuery } from "@/redux/api/ecommerce/productApi";
 import { Product } from "@/types/ProductType";
 
-// Skeleton loader component for loading state
-const SkeletonCard: React.FC = () => (
-  <div className="animate-pulse rounded-lg border bg-white p-4 shadow-sm">
-    <div className="mb-4 h-48 w-full rounded bg-gray-200"></div>
-    <div className="mb-2 h-6 w-3/4 rounded bg-gray-200"></div>
-    <div className="mb-2 h-4 w-full rounded bg-gray-200"></div>
-    <div className="h-4 w-1/2 rounded bg-gray-200"></div>
-  </div>
-);
-
-// Product details sidebar component
-const ProductDetailsSidebar: React.FC<{
-  product: Product | null;
-  onClose: () => void;
-}> = ({ product, onClose }) => (
-  <div
-    className={`fixed inset-y-0 right-0 w-full max-w-md transform bg-white shadow-xl transition-transform duration-300 ease-in-out sm:w-96 ${
-      product ? "translate-x-0" : "translate-x-full"
-    }`}
-  >
-    {product && (
-      <div className="flex h-full flex-col">
-        <div className="flex items-center justify-between border-b p-4">
-          <h2 className="text-xl font-semibold text-gray-800">
-            Product Details
-          </h2>
-          <button
-            onClick={onClose}
-            className="rounded p-2 text-gray-600 hover:bg-gray-100"
-            aria-label="Close sidebar"
-          >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-        <div className="flex-1 overflow-y-auto p-4">
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            className="mb-4 h-64 w-full rounded object-cover"
-          />
-          <h3 className="mb-2 text-lg font-medium text-gray-800">
-            {product.name}
-          </h3>
-          <p className="mb-4 text-gray-600">{product.description}</p>
-          <div className="text-sm text-gray-400">
-            <p>Created: {new Date(product.createdAt).toLocaleDateString()}</p>
-            <p>Updated: {new Date(product.updatedAt).toLocaleDateString()}</p>
-            <p>Category ID: {product.categoryId}</p>
-            <p>Status ID: {product.statusId}</p>
-          </div>
-        </div>
-        <div className="border-t p-4">
-          <button
-            onClick={onClose}
-            className="w-full rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    )}
-  </div>
-);
-
 const ProductList: React.FC = () => {
   const {
     data: products,
     isLoading: isProductsLoading,
     isError: isProductsError,
   } = useGetAllProductsQuery();
+
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const handleOpenSidebar = (product: Product) => {
@@ -156,7 +81,84 @@ const ProductList: React.FC = () => {
   );
 };
 
+// Skeleton loader component for loading state
+const SkeletonCard: React.FC = () => (
+  <div className="animate-pulse rounded-lg border bg-white p-4 shadow-sm">
+    <div className="mb-4 h-48 w-full rounded bg-gray-200"></div>
+    <div className="mb-2 h-6 w-3/4 rounded bg-gray-200"></div>
+    <div className="mb-2 h-4 w-full rounded bg-gray-200"></div>
+    <div className="h-4 w-1/2 rounded bg-gray-200"></div>
+  </div>
+);
+
+// Product details sidebar component
+const ProductDetailsSidebar: React.FC<{
+  product: Product | null;
+  onClose: () => void;
+}> = ({ product, onClose }) => (
+  <div
+    className={`fixed inset-y-0 right-0 w-full max-w-md transform bg-white shadow-xl transition-transform duration-300 ease-in-out sm:w-96 ${
+      product ? "translate-x-0" : "translate-x-full"
+    }`}
+  >
+    {product && (
+      <div className="flex h-full flex-col">
+        <div className="flex items-center justify-between border-b p-4">
+          <h2 className="text-xl font-semibold text-gray-800">
+            Product Details
+          </h2>
+          <button
+            onClick={onClose}
+            className="rounded p-2 text-gray-600 hover:bg-gray-100"
+            aria-label="Close sidebar"
+          >
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-4">
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="mb-4 h-64 w-full rounded object-cover"
+          />
+          <h3 className="mb-2 text-lg font-medium text-gray-800">
+            {product.name}{" "}
+          </h3>
+          <p className="mb-4 text-gray-600">{product.description}</p>
+          <div className="text-sm text-gray-400">
+            <p>Created: {new Date(product.createdAt).toLocaleDateString()}</p>
+            <p>Updated: {new Date(product.updatedAt).toLocaleDateString()}</p>
+            <p>Category ID: {product.categoryId}</p>
+            <p>Status ID: {product.statusId}</p>
+          </div>
+        </div>
+        <div className="border-t p-4">
+          <button
+            onClick={onClose}
+            className="w-full rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+);
+
 export default ProductList;
+
 // import { useGetAllProductsQuery } from "@/redux/api/ecommerce/productApi";
 // import { Link } from "react-router-dom";
 // import { Product } from "@/types/ProductType";
