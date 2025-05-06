@@ -21,7 +21,7 @@ type SignInInput = {
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL || "http://localhost:8080",
+    baseUrl: import.meta.env.VITE_BASE_URL || "http://localhost:8080",
     credentials: "include",
   }),
 

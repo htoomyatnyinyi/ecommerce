@@ -1,17 +1,26 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "./api/auth/authApi";
-import { postApi } from "./api/json/postApi";
+import { productApi } from "./api/ecommerce/productApi";
+import cartReducer from "./slice/cartSlice";
 
 const store = configureStore({
   reducer: {
+    // reducer
+    cart: cartReducer,
+
+    // rtk_qurey
     [authApi.reducerPath]: authApi.reducer,
-    [postApi.reducerPath]: postApi.reducer,
+    [productApi.reducerPath]: productApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(authApi.middleware)
-      .concat(postApi.middleware),
+      .concat(productApi.middleware),
 });
+
+// Type helpers
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export default store;

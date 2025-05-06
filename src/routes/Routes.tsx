@@ -1,10 +1,16 @@
 import { createBrowserRouter, Outlet, Navigate } from "react-router-dom";
-import NotFound from "@/routes/NotFound";
-import NavBar from "@/components/navbar/NavBar";
-import Home from "@/pages/Home";
-
 import { useAuthMeQuery } from "@/redux/api/auth/authApi";
+
+import NotFound from "@/routes/NotFound";
+import Home from "@/pages/Home";
 import Ecommerce from "@/pages/ecommerce/Ecommerce";
+import ProductList from "@/pages/ecommerce/ProductLists";
+// import ProductDetails from "@/pages/ecommerce/ProductDetails";
+// import ProductFeatures from "@/pages/ecommerce/ProductFeatures";
+// import ProductQuickView from "@/pages/ecommerce/ProductQuickView";
+// import ShoppingCart from "@/pages/ecommerce/ShoppingCart";
+import NavBar from "@/components/navbar/NavBar";
+// import NavigationBar from "@/components/navbar/NavigationBar";
 
 type ProtectedRoute = {
   allowedRoles: string[];
@@ -14,6 +20,7 @@ type ProtectedRoute = {
 const AppLayout = () => (
   <>
     <NavBar />
+    {/* <NavigationBar /> */}
     {/* Add any other layout components here */}
     <main className="pt-16">
       {/* Adjust padding as needed */}
@@ -31,10 +38,11 @@ const ProtectedRoute = ({ allowedRoles, children }: ProtectedRoute) => {
   }
 
   if (user && user.role === "employer") {
-    return <Navigate to="/employer" replace />;
+    return <Navigate to="/profile/employer" replace />;
   }
+
   if (user && user.role === "user") {
-    return <Navigate to="/user" replace />;
+    return <Navigate to="/profile/user" replace />;
   }
   // If the user is authenticated and has the correct role, render the children
   return children;
@@ -50,12 +58,28 @@ export const router = createBrowserRouter([
       },
       {
         path: "/auth",
-        element: <div>Auth Page</div>,
-      },
-      {
-        path: "/ecommerce",
         element: <Ecommerce />,
       },
+      {
+        path: "/products",
+        element: <ProductList />,
+      },
+      // {
+      //   path: "/productfeatures",
+      //   element: <ProductFeatures />,
+      // },
+      // {
+      //   path: "/productquickview",
+      //   element: <ProductQuickView />,
+      // },
+      // {
+      //   path: "/cart",
+      //   element: <ShoppingCart />,
+      // },
+      // {
+      //   path: "/products/:id",
+      //   element: <ProductDetails />,
+      // },
       {
         path: "/employer/profile",
         element: (

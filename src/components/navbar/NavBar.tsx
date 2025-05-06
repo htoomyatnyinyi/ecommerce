@@ -7,10 +7,13 @@ const NavBar: React.FC = () => {
   return (
     <div>
       <nav
-        className="fixed top-0 left-0 right-0 backdrop-blur-sm shadow-md 
+        className="fixed top-0 left-0 right-0 z-5 backdrop-blur-sm shadow-md 
       m-2  bg-white dark:bg-slate-900 dark:bg-opacity-50"
       >
-        <div className="container mx-auto flex justify-between items-center">
+        <div
+          className="container mx-auto flex justify-between
+         items-center"
+        >
           <div>
             <Link to="/" className="flex items-baseline ">
               <img
@@ -22,9 +25,8 @@ const NavBar: React.FC = () => {
             </Link>
           </div>
           <div className="flex space-x-4">
-            <Link to="/ecommerce">STORE</Link>
-            <ul>ABOUT</ul>
-            <ul>ADDRESS</ul>
+            <Link to="/products">STORE</Link>
+            <Link to="/cart">SHOPPING_CART</Link>
           </div>
           <div>
             <ul className="flex space-x-4 items-center">
