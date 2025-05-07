@@ -5,6 +5,7 @@ import NotFound from "@/routes/NotFound";
 import Home from "@/pages/Home";
 import Ecommerce from "@/pages/ecommerce/Ecommerce";
 import ProductList from "@/pages/ecommerce/ProductLists";
+import ProductLists from "@/pages/ecommerce_store/ProductLists";
 // import ProductDetails from "@/pages/ecommerce/ProductDetails";
 // import ProductFeatures from "@/pages/ecommerce/ProductFeatures";
 // import ProductQuickView from "@/pages/ecommerce/ProductQuickView";
@@ -22,7 +23,8 @@ const AppLayout = () => (
     <NavBar />
     {/* <NavigationBar /> */}
     {/* Add any other layout components here */}
-    <main className="pt-16">
+    <main className="pt-18">
+      {/* <main className="pt-16">  */}
       {/* Adjust padding as needed */}
       <Outlet /> {/* Renders the matched child route component */}
     </main>
@@ -63,6 +65,10 @@ export const router = createBrowserRouter([
       {
         path: "/products",
         element: <ProductList />,
+      },
+      {
+        path: "/e_products",
+        element: <ProductLists />,
       },
       // {
       //   path: "/productfeatures",

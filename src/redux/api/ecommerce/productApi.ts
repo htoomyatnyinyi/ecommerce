@@ -12,13 +12,26 @@ export const productApi = createApi({
     getAllProducts: builder.query<Product[], void>({
       query: () => "/products",
     }),
+    
     getProductById: builder.query<Product, number>({
       query: (id) => `/products/${id}`,
+    }),
+
+    checkOutOrder: builder.mutation({
+      query: (orderData) => ({
+        url: "/products/checkout",
+        method: "POST",
+        body: orderData,
+      }),
     }),
   }),
 });
 
-export const { useGetAllProductsQuery, useGetProductByIdQuery } = productApi;
+export const {
+  useGetAllProductsQuery,
+  useGetProductByIdQuery,
+  useCheckOutOrderMutation,
+} = productApi;
 
 // note
 

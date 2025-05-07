@@ -8,7 +8,7 @@ const NavBar: React.FC = () => {
     <div>
       <nav
         className="fixed top-0 left-0 right-0 z-5 backdrop-blur-sm shadow-md 
-      m-2  bg-white dark:bg-slate-900 dark:bg-opacity-50"
+      m-2   dark:backdrop-blur-sm dark:bg-opacity-50"
       >
         <div
           className="container mx-auto flex justify-between
@@ -26,6 +26,7 @@ const NavBar: React.FC = () => {
           </div>
           <div className="flex space-x-4">
             <Link to="/products">STORE</Link>
+            <Link to="/e_products">E_STORE</Link>
             <Link to="/cart">SHOPPING_CART</Link>
           </div>
           <div>

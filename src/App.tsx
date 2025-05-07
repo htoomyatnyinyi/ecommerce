@@ -4,7 +4,7 @@ import { router } from "@/routes/Routes";
 
 const App: React.FC = () => {
   return (
-    <div>
+    <div className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white">
       <RouterProvider router={router} />
     </div>
   );
