@@ -5,13 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store"; // Adjust the path to your Redux store file
 import { addToCart, removeFromCart, setCount } from "@/redux/slice/cartSlice";
 // Interface for product data within this component
-
-interface Product {
-  id: number;
-  name: string; // Will be used as 'title' for the cart
-  description: string;
-  price: number;
-}
+import { useGetAllProductsQuery } from "@/redux/api/ecommerce/productApi"; // Adjust the path to your product API file
+// interface Product {
+//   id: number;
+//   name: string; // Will be used as 'title' for the cart
+//   description: string;
+//   price: number;
+// }
+import { Product } from "@/types/ProductType";
 
 // Interface for items in the cart, matching your Redux slice
 interface CartItem {
@@ -28,36 +29,40 @@ const Home = () => {
     (state: RootState) => state.cart.items as CartItem[]
   );
 
-  const products: Product[] = [
-    {
-      id: 1,
-      name: "Laptop Pro",
-      description: "High-performance laptop for professionals.",
-      price: 1200.0,
-    },
-    {
-      id: 2,
-      name: "Wireless Mouse",
-      description: "Ergonomic wireless mouse with long battery life.",
-      price: 25.5,
-    },
-    {
-      id: 3,
-      name: "Mechanical Keyboard",
-      description: "RGB mechanical keyboard with tactile switches.",
-      price: 75.0,
-    },
-    {
-      id: 4,
-      name: "4K Monitor",
-      description: "27-inch 4K UHD monitor with vibrant colors.",
-      price: 350.99,
-    },
-  ];
+  const { data: products, isLoading: isProductsLoading } =
+    useGetAllProductsQuery();
+
+  if (isProductsLoading) return <div>Loading...</div>;
+  // const products: Product[] = [
+  //   {
+  //     id: 1,
+  //     name: "Laptop Pro",
+  //     description: "High-performance laptop for professionals.",
+  //     price: 1200.0,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Wireless Mouse",
+  //     description: "Ergonomic wireless mouse with long battery life.",
+  //     price: 25.5,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Mechanical Keyboard",
+  //     description: "RGB mechanical keyboard with tactile switches.",
+  //     price: 75.0,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "4K Monitor",
+  //     description: "27-inch 4K UHD monitor with vibrant colors.",
+  //     price: 350.99,
+  //   },
+  // ];
 
   const handleIncrementCount = () => {
     // setCount reducer increments count by 1 and does not use payload
-    dispatch(setCount());
+    dispatch(setCount(dataCount + 1)); // Increment the count by 1
   };
 
   const handleAddToCart = (product: Product) => {
@@ -134,7 +139,8 @@ const Home = () => {
                   {product.description}
                 </p>
                 <p className="text-lg font-bold text-green-600 mb-4">
-                  ${product.price.toFixed(2)}
+                  {/* ${product.price.toFixed(2)} */}
+                  Price haven't been added yet
                 </p>
               </div>
               <button
@@ -215,6 +221,7 @@ const Home = () => {
 };
 
 export default Home;
+
 // import { useDispatch, useSelector } from "react-redux";
 // import { RootState } from "@/redux/store"; // Adjust the path to your Redux store file
 // import { addToCart, setCount } from "@/redux/slice/cartSlice"; // Assuming addToCart adds the product object or fetches it by ID
