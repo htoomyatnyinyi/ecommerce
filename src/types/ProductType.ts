@@ -41,3 +41,11 @@ export interface Stock {
 //   createdAt: string;
 //   updatedAt: string;
 // }
+
+export interface CartItem {
+  productId: number;
+  title: string;
+  price: number;
+  quantity: number;
+  size: string;
+}
