@@ -48,4 +48,5 @@ export interface CartItem {
   price: number;
   quantity: number;
   size: string;
+  sku: string;
 }

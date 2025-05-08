@@ -30,13 +30,17 @@ const cartSlice = createSlice({
     addToCart: (state, action: PayloadAction<Omit<CartItem, "quantity">>) => {
       const item = action.payload;
       console.log(item, " cart slice action.payload");
+      
       const existing = state.items.find((i) => i.productId === item.productId);
-      if (existing) {
+      const sku = state.items.find((s) => s.sku === item.sku);
+      
+      if (existing && sku) {
         existing.quantity += 1;
       } else {
         state.items.push({ ...item, quantity: 1 });
       }
     },
+
     removeFromCart: (state, action: PayloadAction<number>) => {
       state.items = state.items.filter((i) => i.productId !== action.payload);
     },
