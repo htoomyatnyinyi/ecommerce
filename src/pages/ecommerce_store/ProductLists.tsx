@@ -2,17 +2,35 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { addToCart, removeFromCart } from "@/redux/slice/cartSlice";
-import { useGetAllProductsQuery } from "@/redux/api/ecommerce/productApi";
+import {
+  useGetAllProductsQuery,
+  useGetProductByIdQuery,
+} from "@/redux/api/ecommerce/productApi";
+
 import { Product, CartItem } from "@/types/ProductType";
+import { setSelectId } from "@/redux/slice/productSlice";
 
 const ProductLists = () => {
   const dispatch = useDispatch();
-  const { data: products, isLoading: isProductsLoading } =
-    useGetAllProductsQuery();
+
+  const id = useSelector((state: RootState) => state.product.selectId);
+  console.log(id, "by porduct");
 
   const cartItems = useSelector(
     (state: RootState) => state.cart.items as CartItem[]
   );
+
+  const { data: products, isLoading: isProductsLoading } =
+    useGetAllProductsQuery();
+
+  const { data: productDetails, isLoading: isProductDetailsLoading } =
+    useGetProductByIdQuery(id!, { skip: !id });
+
+  if (isProductDetailsLoading) return <p>Product Details Loading</p>;
+  console.log(productDetails, "check by id info");
+
+  // testing
+  const [open, setOpen] = useState<boolean>(false);
 
   // State to track selected SKU index for each product
   const [selectedSkus, setSelectedSkus] = useState<{ [key: number]: number }>(
@@ -29,6 +47,7 @@ const ProductLists = () => {
     const product = products?.find((p) => p.id === productId);
     if (product) {
       const selectedStockItem = product.stock[selectedIndex];
+      // check info
       console.log("Selected SKU:", selectedStockItem.sku);
       console.log("Selected Stock Item:", selectedStockItem);
     }
@@ -57,13 +76,58 @@ const ProductLists = () => {
     }
   };
 
+  // new route for cart section
   const handleRemoveFromCart = (productId: number, sku: string) => {
     console.log("Removing product with ID:", productId, "and ", sku);
     dispatch(removeFromCart({ productId, sku }));
   };
 
+  const handleProductDetails = () => {
+    dispatch(setSelectId(1));
+    setOpen((prev) => !prev);
+  };
+
   return (
     <div className="p-6 font-sans min-h-screen">
+      {/* <button
+        // onClick={() => setOpen((prev) => !prev)}
+        className="bg-green-500 hover:bg-amber-300 p-2 m-1"
+      >
+        Chek OPen or Not
+      </button> */}
+      <button
+        onClick={() => handleProductDetails()}
+        // onClick={() => dispatch(setSelectId(2))}
+        className="bg-green-500 hover:bg-amber-300 p-2 m-1"
+      >
+        Chek OPen or Not
+      </button>
+
+      <p>
+        {open ? (
+          <div className="bg-green-500 absolute left-10 z-5">
+            <h1>heaker</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit
+              mollitia ipsam delectus totam, maiores in cum officia minima a
+              velit iure. Dolor alias quo deserunt pariatur expedita ex quam
+              fuga.
+            </p>
+            <p>{productDetails?.name}</p>
+            <p>{productDetails?.description}</p>
+            <p>{productDetails?.createdAt}</p>
+            <img src={productDetails?.imageUrl} alt="details" />
+            <input
+              type="text"
+              placeholder="type here"
+              className="p-2 m-1 border"
+            />
+          </div>
+        ) : (
+          <></>
+        )}
+      </p>
+
       {/* Products Section */}
       <section className="mb-10">
         <h2 className="text-3xl font-semibold mb-6">Products</h2>

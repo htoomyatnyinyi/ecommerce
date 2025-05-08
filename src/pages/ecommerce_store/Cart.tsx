@@ -24,11 +24,20 @@ const Cart: React.FC = () => {
               className="border-b py-2 flex justify-between"
             >
               <div>
-                {item.title} x {item.quantity}
+                <p>
+                  {item.title} x {item.quantity}
+                </p>
+                <p>{item.sku}</p>
+                <p>{item.size}</p>
+                <p>{item.category}</p>
               </div>
               <div>${item.price * item.quantity}</div>
               <button
-                onClick={() => dispatch(removeFromCart(item.productId))}
+                onClick={() =>
+                  dispatch(
+                    removeFromCart({ productId: item.productId, sku: item.sku })
+                  )
+                }
                 className="text-red-500"
               >
                 Remove

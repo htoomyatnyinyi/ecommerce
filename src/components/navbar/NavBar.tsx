@@ -25,19 +25,18 @@ const NavBar: React.FC = () => {
             </Link>
           </div>
           <div className="flex space-x-4">
-            <Link to="/products">STORE</Link>
             <Link to="/e_products">E_STORE</Link>
             <Link to="/cart">SHOPPING_CART</Link>
           </div>
           <div>
             <ul className="flex space-x-4 items-center">
               <li>
-                <Link to="/auth" className="">
+                <Link to="/auth/signin" className="">
                   Sign In
                 </Link>
               </li>
               <li>
-                <Link to="/auth" className="">
+                <Link to="/auth/signup" className="">
                   Sign Up
                 </Link>
               </li>

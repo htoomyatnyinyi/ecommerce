@@ -4,8 +4,8 @@ import { useAuthMeQuery } from "@/redux/api/auth/authApi";
 import NotFound from "@/routes/NotFound";
 import Home from "@/pages/Home";
 import Ecommerce from "@/pages/ecommerce/Ecommerce";
-import ProductList from "@/pages/ecommerce/ProductLists";
 import ProductLists from "@/pages/ecommerce_store/ProductLists";
+// import ProductList from "@/pages/ecommerce/ProductLists";
 // import ProductDetails from "@/pages/ecommerce/ProductDetails";
 // import ProductFeatures from "@/pages/ecommerce/ProductFeatures";
 // import ProductQuickView from "@/pages/ecommerce/ProductQuickView";
@@ -60,13 +60,13 @@ export const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/auth",
+        path: "/auth/signin",
         element: <Ecommerce />,
       },
-      {
-        path: "/products",
-        element: <ProductList />,
-      },
+      // {
+      //   path: "/products",
+      //   element: <ProductList />,
+      // },
       {
         path: "/e_products",
         element: <ProductLists />,
