@@ -55,9 +55,9 @@ const ProductLists = () => {
     }
   };
 
-  const handleRemoveFromCart = (productId: number) => {
-    console.log("Removing product with ID:", productId);
-    dispatch(removeFromCart(productId));
+  const handleRemoveFromCart = (productId: number, sku: string) => {
+    console.log("Removing product with ID:", productId, "and ", sku);
+    dispatch(removeFromCart({ productId, sku }));
   };
 
   return (
@@ -186,7 +186,9 @@ const ProductLists = () => {
                     Subtotal: ${(item.price * item.quantity).toFixed(2)}
                   </div>
                   <button
-                    onClick={() => handleRemoveFromCart(item.productId)}
+                    onClick={() =>
+                      handleRemoveFromCart(item.productId, item.sku)
+                    }
                     className="mt-2 sm:mt-0 sm:ml-4 px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-md hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400"
                   >
                     Remove

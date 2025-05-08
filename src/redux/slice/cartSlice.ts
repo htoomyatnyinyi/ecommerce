@@ -1,13 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CartItem } from "@/types/ProductType";
-// interface CartItem {
-//   productId: number;
-//   title: string;
-//   price: number;
-//   quantity: number;
-//   size: string;
-// }
 
+// Payload for identifying a specific item to remove or update
+interface CartItemIdentifier {
+  productId: number;
+  sku: string;
+}
 interface CartState {
   items: CartItem[];
   count: number;
@@ -28,21 +26,46 @@ const cartSlice = createSlice({
     },
 
     addToCart: (state, action: PayloadAction<Omit<CartItem, "quantity">>) => {
-      const item = action.payload;
-      console.log(item, " cart slice action.payload");
-      
-      const existing = state.items.find((i) => i.productId === item.productId);
-      const sku = state.items.find((s) => s.sku === item.sku);
-      
-      if (existing && sku) {
-        existing.quantity += 1;
+      const newItemDetails = action.payload;
+      console.log(newItemDetails, " info of cart product action.payload");
+
+      // const item = action.payload;
+      // console.log(item, " info of cart product action.payload");
+      // const existing = state.items.find((i) => i.productId === item.productId);
+      // const sku = state.items.find((s) => s.sku === item.sku);
+      // if (existing && sku) {
+      //   existing.quantity += 1;
+      // } else {
+      //   state.items.push({ ...item, quantity: 1 });
+      // }
+
+      //  Find if the exact item (same product ID and SKU) already exists in the cart
+      const existingItem = state.items.find(
+        (item) =>
+          item.productId === newItemDetails.productId &&
+          item.sku === newItemDetails.sku
+      );
+
+      if (existingItem) {
+        // If item exists, increment its quantity
+        existingItem.quantity += 1;
       } else {
-        state.items.push({ ...item, quantity: 1 });
+        // If item does not exist, add it to the cart with quantity 1
+        state.items.push({ ...newItemDetails, quantity: 1 });
       }
     },
 
-    removeFromCart: (state, action: PayloadAction<number>) => {
-      state.items = state.items.filter((i) => i.productId !== action.payload);
+    // removeFromCart: (state, action: PayloadAction<number>) => {
+    //   state.items = state.items.filter((i) => i.productId !== action.payload);
+    // },
+
+    removeFromCart: (state, action: PayloadAction<CartItemIdentifier>) => {
+      const { productId, sku } = action.payload;
+      console.log("removeFromCart action.payload:", { productId, sku });
+      // Filter out the item that matches both productId and sku
+      state.items = state.items.filter(
+        (item) => !(item.productId === productId && item.sku === sku)
+      );
     },
   },
 });
