@@ -14,7 +14,7 @@ const ProductLists = () => {
   const dispatch = useDispatch();
 
   const id = useSelector((state: RootState) => state.product.selectId);
-  console.log(id, "by porduct");
+  // console.log(id, "by porduct");
 
   const cartItems = useSelector(
     (state: RootState) => state.cart.items as CartItem[]
@@ -27,7 +27,7 @@ const ProductLists = () => {
     useGetProductByIdQuery(id!, { skip: !id });
 
   if (isProductDetailsLoading) return <p>Product Details Loading</p>;
-  console.log(productDetails, "check by id info");
+  // console.log(productDetails, "check by id info");
 
   // testing
   const [open, setOpen] = useState<boolean>(false);
@@ -82,8 +82,8 @@ const ProductLists = () => {
     dispatch(removeFromCart({ productId, sku }));
   };
 
-  const handleProductDetails = () => {
-    dispatch(setSelectId(1));
+  const handleProductDetails = (priductDetailsId: number) => {
+    dispatch(setSelectId(priductDetailsId));
     setOpen((prev) => !prev);
   };
 
@@ -95,38 +95,44 @@ const ProductLists = () => {
       >
         Chek OPen or Not
       </button> */}
-      <button
+      {/* <button
         onClick={() => handleProductDetails()}
         // onClick={() => dispatch(setSelectId(2))}
         className="bg-green-500 hover:bg-amber-300 p-2 m-1"
       >
         Chek OPen or Not
-      </button>
+      </button> */}
 
-      <p>
+      <div>
         {open ? (
           <div className="bg-green-500 absolute left-10 z-5">
-            <h1>heaker</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit
-              mollitia ipsam delectus totam, maiores in cum officia minima a
-              velit iure. Dolor alias quo deserunt pariatur expedita ex quam
-              fuga.
-            </p>
-            <p>{productDetails?.name}</p>
-            <p>{productDetails?.description}</p>
-            <p>{productDetails?.createdAt}</p>
-            <img src={productDetails?.imageUrl} alt="details" />
-            <input
-              type="text"
-              placeholder="type here"
-              className="p-2 m-1 border"
-            />
+            {isProductDetailsLoading ? (
+              <> Product Details Loading</>
+            ) : (
+              <div>
+                <h1>heaker</h1>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit
+                  mollitia ipsam delectus totam, maiores in cum officia minima a
+                  velit iure. Dolor alias quo deserunt pariatur expedita ex quam
+                  fuga.
+                </p>
+                <p>{productDetails?.name}</p>
+                <p>{productDetails?.description}</p>
+                <p>{productDetails?.createdAt}</p>
+                <img src={productDetails?.imageUrl} alt="details" />
+                <input
+                  type="text"
+                  placeholder="type here"
+                  className="p-2 m-1 border"
+                />
+              </div>
+            )}
           </div>
         ) : (
           <></>
         )}
-      </p>
+      </div>
 
       {/* Products Section */}
       <section className="mb-10">
@@ -140,86 +146,91 @@ const ProductLists = () => {
                 key={product.id}
                 className="shadow-lg overflow-hidden flex flex-col justify-between"
               >
-                <div className="p-2">
-                  <div className="w-full h-72 mb-4 rounded-md flex items-center justify-center">
-                    <img
-                      src={product.imageUrl}
-                      alt="product_img"
-                      className="h-72 w-full object-cover rounded-md"
-                    />
-                  </div>
-                  <h3 className="text-xl font-semibold backdrop-blur-sm mb-2">
-                    {product.name}
-                  </h3>
-                  <p className="text-sm mb-3">{product.description}</p>
-
-                  {/* Display price of the selected variant */}
-                  <div>
-                    {product.stock && product.stock.length > 0 ? (
-                      <p className="text-lg font-bold text-green-600 mt-2">
-                        $
-                        {product.stock[
-                          selectedSkus[product.id] ?? 0
-                        ].price.toFixed(2)}
-                      </p>
-                    ) : (
-                      <p className="text-gray-500 mt-2 text-sm">
-                        Price not available for selected variant.
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <p>{product.category.name}</p>
+                <button
+                  onClick={() => handleProductDetails(product.id)}
+                  className="bg-blue-900 p-2 m-1"
+                >
+                  <div className="p-2">
+                    <div className="w-full h-72 mb-4 rounded-md flex items-center justify-center">
                       <img
-                        src={product.category.iconUrl}
-                        alt="product icon"
-                        className="h-10 w-10"
+                        src={product.imageUrl}
+                        alt="product_img"
+                        className="h-72 w-full object-cover rounded-md"
                       />
                     </div>
-                    <div className="backdrop-blur-sm shadow-2xl p-2">
+                    <h3 className="text-xl font-semibold backdrop-blur-sm mb-2">
+                      {product.name}
+                    </h3>
+                    <p className="text-sm mb-3">{product.description}</p>
+
+                    {/* Display price of the selected variant */}
+                    <div>
                       {product.stock && product.stock.length > 0 ? (
-                        <div className="mb-4">
-                          <label
-                            htmlFor={`sku-select-${product.id}`}
-                            className="block text-sm font-medium mb-1"
-                          >
-                            Select Variant:
-                          </label>
-                          <select
-                            id={`sku-select-${product.id}`}
-                            name="sku"
-                            value={selectedSkus[product.id] ?? 0}
-                            onChange={(e) => handleChange(product.id, e)}
-                          >
-                            {product.stock.map((stockItem, index) => (
-                              <option
-                                key={stockItem.sku || index}
-                                value={index}
-                              >
-                                {stockItem.sku} - {stockItem.size} ($
-                                {stockItem.price.toFixed(2)})
-                              </option>
-                            ))}
-                          </select>
-                        </div>
+                        <p className="text-lg font-bold text-green-600 mt-2">
+                          $
+                          {product.stock[
+                            selectedSkus[product.id] ?? 0
+                          ].price.toFixed(2)}
+                        </p>
                       ) : (
-                        <p className="text-sm text-red-500 mt-2 mb-4 font-semibold">
-                          Out of Stock
+                        <p className="text-gray-500 mt-2 text-sm">
+                          Price not available for selected variant.
                         </p>
                       )}
                     </div>
+
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <p>{product.category.name}</p>
+                        <img
+                          src={product.category.iconUrl}
+                          alt="product icon"
+                          className="h-10 w-10"
+                        />
+                      </div>
+                      <div className="backdrop-blur-sm shadow-2xl p-2">
+                        {product.stock && product.stock.length > 0 ? (
+                          <div className="mb-4">
+                            <label
+                              htmlFor={`sku-select-${product.id}`}
+                              className="block text-sm font-medium mb-1"
+                            >
+                              Select Variant:
+                            </label>
+                            <select
+                              id={`sku-select-${product.id}`}
+                              name="sku"
+                              value={selectedSkus[product.id] ?? 0}
+                              onChange={(e) => handleChange(product.id, e)}
+                            >
+                              {product.stock.map((stockItem, index) => (
+                                <option
+                                  key={stockItem.sku || index}
+                                  value={index}
+                                >
+                                  {stockItem.sku} - {stockItem.size} ($
+                                  {stockItem.price.toFixed(2)})
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        ) : (
+                          <p className="text-sm text-red-500 mt-2 mb-4 font-semibold">
+                            Out of Stock
+                          </p>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <button
-                  onClick={() => handleAddToCart(product)}
-                  className="w-full p-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold 
-                  hover:bg-blue-900 dark:hover:bg-blue-900 dark:hover:text-white transition-colors focus:outline-none 
+                  <button
+                    onClick={() => handleAddToCart(product)}
+                    className="w-full p-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-semibold
+                  hover:bg-blue-900 dark:hover:bg-blue-900 dark:hover:text-white transition-colors focus:outline-none
                   focus:ring-2 focus:ring-green-500"
-                  disabled={!product.stock || product.stock.length === 0}
-                >
-                  Add To Cart
+                    disabled={!product.stock || product.stock.length === 0}
+                  >
+                    Add To Cart
+                  </button>
                 </button>
               </div>
             ))}
