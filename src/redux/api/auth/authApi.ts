@@ -8,6 +8,7 @@ import { UserData } from "@/types/AuthType";
 // };
 
 type SignUpInput = {
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -30,14 +31,14 @@ export const authApi = createApi({
   endpoints: (builder) => ({
     authMe: builder.query<UserData, void>({
       query: () => ({
-        url: "/api/auth/me",
+        url: "/auth/me",
         method: "GET",
       }),
     }),
 
     signUp: builder.mutation<void, SignUpInput>({
       query: (data) => ({
-        url: "/api/auth/signup",
+        url: "/auth/register",
         method: "POST",
         body: data,
       }),
@@ -46,7 +47,7 @@ export const authApi = createApi({
 
     signIn: builder.mutation<void, SignInInput>({
       query: (data) => ({
-        url: "/api/auth/login",
+        url: "/auth/login",
         method: "POST",
         body: data,
       }),

@@ -35,3 +35,21 @@ const ThemeToggle = () => {
 };
 
 export default ThemeToggle;
+
+// // Add dark mode toggle and Tailwind dark classes
+// const DarkModeToggle = () => {
+//   const [darkMode, setDarkMode] = useState(false);
+
+//   useEffect(() => {
+//     document.documentElement.classList.toggle('dark', darkMode);
+//   }, [darkMode]);
+
+//   return (
+//     <button
+//       onClick={() => setDarkMode(!darkMode)}
+//       className="p-2 rounded-full"
+//     >
+//       {darkMode ? '☀️' : '🌙'}
+//     </button>
+//   );
+// };

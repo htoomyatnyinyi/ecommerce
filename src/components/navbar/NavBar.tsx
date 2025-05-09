@@ -7,7 +7,7 @@ const NavBar: React.FC = () => {
   return (
     <div>
       <nav
-        className="fixed top-0 left-0 right-0 z-5 backdrop-blur-sm shadow-md 
+        className="fixed top-0 left-0 right-0 z-5 backdrop-blur-lg shadow-lg shadow-black/5 backdrop-saturate-100 
       m-2   dark:backdrop-blur-sm dark:bg-opacity-50"
       >
         <div
@@ -28,6 +28,7 @@ const NavBar: React.FC = () => {
             <Link to="/e_products">E_STORE</Link>
             <Link to="/products">STORE</Link>
             <Link to="/cart">SHOPPING_CART</Link>
+            <Link to="/dashboard">DASHBOARD</Link>
           </div>
           <div>
             <ul className="flex space-x-4 items-center">

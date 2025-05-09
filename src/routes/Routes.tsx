@@ -3,17 +3,14 @@ import { useAuthMeQuery } from "@/redux/api/auth/authApi";
 
 import NotFound from "@/routes/NotFound";
 import Home from "@/pages/Home";
-import Ecommerce from "@/pages/ecommerce/Ecommerce";
 import ProductLists from "@/pages/ecommerce_store/ProductLists";
-// import ProductList from "@/pages/ecommerce/ProductLists";
-// import ProductDetails from "@/pages/ecommerce/ProductDetails";
-// import ProductFeatures from "@/pages/ecommerce/ProductFeatures";
-// import ProductQuickView from "@/pages/ecommerce/ProductQuickView";
-// import ShoppingCart from "@/pages/ecommerce/ShoppingCart";
+
 import NavBar from "@/components/navbar/NavBar";
-// import NavigationBar from "@/components/navbar/NavigationBar";
 import Cart from "@/pages/ecommerce_store/Cart";
 import ProductStore from "@/pages/ecommerce_store/ProductStore";
+import Dashboard from "@/pages/dashboard/Dashboard";
+import SignUp from "@/pages/auth/SignUp";
+import SignIn from "@/pages/auth/SignIn";
 
 type ProtectedRoute = {
   allowedRoles: string[];
@@ -62,12 +59,13 @@ export const router = createBrowserRouter([
       },
       {
         path: "/auth/signin",
-        element: <Ecommerce />,
+        element: <SignIn />,
       },
-      // {
-      //   path: "/products",
-      //   element: <ProductList />,
-      // },
+      {
+        path: "/auth/signup",
+        element: <SignUp />,
+      },
+
       {
         path: "/e_products",
         element: <ProductLists />,
@@ -77,25 +75,13 @@ export const router = createBrowserRouter([
         element: <ProductStore />,
       },
       {
+        path: "/dashboard",
+        element: <Dashboard />,
+      },
+      {
         path: "/cart",
         element: <Cart />,
       },
-      // {
-      //   path: "/productfeatures",
-      //   element: <ProductFeatures />,
-      // },
-      // {
-      //   path: "/productquickview",
-      //   element: <ProductQuickView />,
-      // },
-      // {
-      //   path: "/cart",
-      //   element: <ShoppingCart />,
-      // },
-      // {
-      //   path: "/products/:id",
-      //   element: <ProductDetails />,
-      // },
       {
         path: "/employer/profile",
         element: (

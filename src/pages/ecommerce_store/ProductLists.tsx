@@ -92,11 +92,11 @@ const ProductLists = () => {
   };
 
   return (
-    <div className="p-2 min-h-screen ">
+    <div className="p-2 min-h-screen relative ">
       <div>
         {open && (
           // <div className="bg-green-500 absolute left-10 z-5">
-          <div className="  fixed insert-0 backdrop-blur-sm z-5">
+          <div className="  fixed insert-0 shadow-lg shadow-black/5 backdrop-saturate-200 backdrop-blur-lg z-5">
             {isProductDetailsLoading ? (
               <> Product Details Loading</>
             ) : (
@@ -112,7 +112,7 @@ const ProductLists = () => {
                     alt={productDetails?.name}
                     className="w-200 h-200 object-cover p-2  rounded-lg"
                   />
-                  <div className="flex p-2 bg-slate-900 text-white">
+                  <div className="  backdrop-blur-sm p-2  text-white">
                     {/* <p>{productDetails?.name}</p> */}
                     <p>{productDetails?.description}</p>
                   </div>

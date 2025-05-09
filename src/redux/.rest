@@ -1,3 +1,24 @@
 GET http://localhost:4000/products
 ###
 GET http://localhost:4000/categories
+
+###
+POST http://localhost:4000/products
+Content-Type: application/json
+
+{
+  "name": "name1",
+  "imageUrl": "jfjfj"
+}
+
+###
+# {
+#   "id": 0,
+#   "name": "string",
+#   "description": "string",
+#   "imageUrl": "string",
+#   "categoryId": 0,
+#   "createdAt": "string",
+#   "updatedAt": "string",
+#   "statusId": 0
+# }
