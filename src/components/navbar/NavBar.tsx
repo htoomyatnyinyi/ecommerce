@@ -26,6 +26,7 @@ const NavBar: React.FC = () => {
           </div>
           <div className="flex space-x-4">
             <Link to="/e_products">E_STORE</Link>
+            <Link to="/products">STORE</Link>
             <Link to="/cart">SHOPPING_CART</Link>
           </div>
           <div>

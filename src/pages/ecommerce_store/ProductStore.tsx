@@ -1,40 +1,32 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { addToCart, removeFromCart } from "@/redux/slice/cartSlice";
+import { addToCart } from "@/redux/slice/cartSlice";
 import {
   useGetAllProductsQuery,
   useGetProductByIdQuery,
 } from "@/redux/api/ecommerce/productApi";
-
-import { Product, CartItem } from "@/types/ProductType";
+import { Product } from "@/types/ProductType";
 import { setSelectId } from "@/redux/slice/productSlice";
 
-const ProductLists = () => {
+import ProductDetailsModal from "./ProductDetailsModal";
+
+const ProductStore = () => {
   const dispatch = useDispatch();
 
   const id = useSelector((state: RootState) => state.product.selectId);
-  // console.log(id, "by porduct");
-
-  const cartItems = useSelector(
-    (state: RootState) => state.cart.items as CartItem[]
-  );
 
   const { data: products, isLoading: isProductsLoading } =
     useGetAllProductsQuery();
 
   const { data: productDetails, isLoading: isProductDetailsLoading } =
     useGetProductByIdQuery(id!, { skip: !id });
-  // console.log(productDetails, "check by id info");
 
-  // State to track selected SKU index for each product
   const [selectedSkus, setSelectedSkus] = useState<{ [key: number]: number }>(
     {}
   );
 
   const [open, setOpen] = useState<boolean>(false);
-
-  // if (isProductDetailsLoading) return <p>Product Details Loading</p>;
 
   const handleChange = (
     productId: number,
@@ -55,7 +47,6 @@ const ProductLists = () => {
   const handleAddToCart = (product: Product) => {
     console.log("Adding product to cart:", product);
 
-    // Get the selected stock index for this product (default to 0 if not selected)
     const selectedIndex = selectedSkus[product.id] ?? 0;
 
     if (product.stock.length > 0) {
@@ -75,34 +66,42 @@ const ProductLists = () => {
     }
   };
 
-  // new route for cart section
-  const handleRemoveFromCart = (productId: number, sku: string) => {
-    console.log("Removing product with ID:", productId, "and ", sku);
-    dispatch(removeFromCart({ productId, sku }));
-  };
-
   const handleProductDetails = (priductDetailsId: number) => {
     dispatch(setSelectId(priductDetailsId));
     // setOpen(true);
     setOpen((prev) => !prev);
+
+    setTimeout(() => {
+      setOpen(false);
+    }, 1000 * 60);
   };
 
   const handleCloseDetails = () => {
     setOpen(false);
   };
 
+  ///
+  // Handler for SKU change within the modal
+  // State for the selected SKU index *within the modal*
+  const [modalSelectedSkuIndex, setModalSelectedSkuIndex] = useState<number>(0);
+  const handleModalSkuChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setModalSelectedSkuIndex(Number(event.target.value));
+  };
+  ///
+
   return (
     <div className="p-2 min-h-screen ">
-      <div>
+      {/* <div>
         {open && (
-          // <div className="bg-green-500 absolute left-10 z-5">
           <div className="  fixed insert-0 backdrop-blur-sm z-5">
             {isProductDetailsLoading ? (
               <> Product Details Loading</>
             ) : (
               <div
-                onClick={handleCloseDetails}
-                className="flex justify-center items-center p-2"
+                // onClick={handleCloseDetails}
+                className="flex p-2"
               >
                 <div className=" font-bold p-2 overflow-hidden shadow-2xl">
                   <img
@@ -113,15 +112,18 @@ const ProductLists = () => {
                     className="w-200 h-200 object-cover p-2  rounded-lg"
                   />
                   <div className="flex p-2 bg-slate-900 text-white">
-                    {/* <p>{productDetails?.name}</p> */}
                     <p>{productDetails?.description}</p>
                   </div>
                 </div>
-                <div>
+                <div className="p-2 m-1">
                   <div className="grid grid-cols-2">
-                    {/* You can add more details like price, stock variants for the detail view if needed */}
-                    {/* Example: Displaying stock details if available */}
                     <p>{productDetails?.name}</p>
+                    <button
+                      onClick={() => handleCloseDetails()}
+                      className="w-full p-2 m-1 bg-sky-900 "
+                    >
+                      Close
+                    </button>
                     <p>{productDetails?.description}</p>
                     <p>{productDetails?.createdAt}</p>
                   </div>
@@ -140,14 +142,14 @@ const ProductLists = () => {
                           </ul>
                         </div>
                       )}
+                    <h1>Also Put Add to cart here too.</h1>
                   </div>
-                  <h1>Also Put Add to cart here too.</h1>
                 </div>
               </div>
             )}
           </div>
         )}
-      </div>
+      </div> */}
 
       {/* Products Section */}
       <section className="mb-10">
@@ -252,70 +254,16 @@ const ProductLists = () => {
           </div>
         )}
       </section>
-
-      {/* Shopping Cart Section */}
-      <section>
-        <h2 className="text-3xl font-semibold mb-6">Shopping Cart</h2>
-        <div className="backdrop-blur-sm rounded-lg shadow-xl p-6">
-          {cartItems && cartItems.length > 0 ? (
-            <ul className="space-y-4">
-              {cartItems.map((item) => (
-                <li
-                  key={item.productId}
-                  className="p-4 border-b border-gray-200 flex flex-col sm:flex-row justify-between sm:items-center gap-3"
-                >
-                  <div className="flex-grow">
-                    <h4 className="text-lg font-medium">{item.title}</h4>
-                    <p className="text-sm">Category: {item.category}</p>
-                    <p className="text-sm">Price: ${item.price.toFixed(2)}</p>
-                    <div className="flex space-x-8">
-                      <p className="text-sm">Size: {item.size}</p>
-                      <p className="text-sm">SKU: {item.sku}</p>
-                      <p className="text-sm">
-                        Quantity:{" "}
-                        <span className="font-semibold">{item.quantity}</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="text-lg font-semibold sm:text-right">
-                    Subtotal: ${(item.price * item.quantity).toFixed(2)}
-                  </div>
-                  <button
-                    onClick={() =>
-                      handleRemoveFromCart(item.productId, item.sku)
-                    }
-                    className="mt-2 sm:mt-0 sm:ml-4 px-4 py-2 bg-red-500 text-white text-sm font-medium rounded-md hover:bg-red-600 transition-colors focus:outline-none focus:ring-2 focus:ring-red-400"
-                  >
-                    Remove
-                  </button>
-                </li>
-              ))}
-              <li className="pt-4 mt-4 border-t border-gray-300 text-right">
-                <p className="text-xl font-bold">
-                  Total: $
-                  {cartItems
-                    .reduce(
-                      (total, item) => total + item.price * item.quantity,
-                      0
-                    )
-                    .toFixed(2)}
-                </p>
-              </li>
-            </ul>
-          ) : (
-            <p className="italic">Your cart is empty. Start shopping!</p>
-          )}
-        </div>
-      </section>
-
-      <footer className="mt-12 text-center text-sm">
-        <p>
-          © {new Date().getFullYear()} Ecommerce Store Developed by Than Htike
-          Zaw & Htoo Myat Nyi Nyi. All rights reserved.
-        </p>
-      </footer>
+      <ProductDetailsModal
+        open={open}
+        onClose={handleCloseDetails}
+        productDetails={productDetails}
+        isLoading={isProductDetailsLoading}
+        selectedIndex={modalSelectedSkuIndex}
+        onSkuChange={handleModalSkuChange}
+      />
     </div>
   );
 };
 
-export default ProductLists;
+export default ProductStore;

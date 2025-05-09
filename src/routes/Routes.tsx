@@ -13,6 +13,7 @@ import ProductLists from "@/pages/ecommerce_store/ProductLists";
 import NavBar from "@/components/navbar/NavBar";
 // import NavigationBar from "@/components/navbar/NavigationBar";
 import Cart from "@/pages/ecommerce_store/Cart";
+import ProductStore from "@/pages/ecommerce_store/ProductStore";
 
 type ProtectedRoute = {
   allowedRoles: string[];
@@ -70,6 +71,10 @@ export const router = createBrowserRouter([
       {
         path: "/e_products",
         element: <ProductLists />,
+      },
+      {
+        path: "/products",
+        element: <ProductStore />,
       },
       {
         path: "/cart",
