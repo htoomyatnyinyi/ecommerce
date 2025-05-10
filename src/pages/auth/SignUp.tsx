@@ -1,5 +1,6 @@
 import { useSignUpMutation } from "@/redux/api/auth/authApi";
 import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 
 const SignUp: React.FC = () => {
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -87,6 +88,12 @@ const SignUp: React.FC = () => {
         </div>
         <button type="submit">Submit</button>
       </form>
+      <p className="p-2 m-1 ">
+        Oop! I alreay have an account, I will click here ...
+        <Link to="/auth/signin" className="underline">
+          Sign In To My Account.
+        </Link>
+      </p>
     </div>
   );
 };

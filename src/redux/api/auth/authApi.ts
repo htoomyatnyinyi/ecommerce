@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { SignInInput, SignUpInput, ResponseUserData } from "@/types/AuthType";
+// type ResCredentials = {
 
+// }
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
@@ -26,31 +28,35 @@ export const authApi = createApi({
       }),
     }),
 
-    signUp: builder.mutation({
+    signUp: builder.mutation<void, SignUpInput>({
       query: (credentials) => ({
         url: "/auth/register",
         method: "POST",
         body: credentials,
       }),
-      transformResponse: (response) => {
+      transformResponse: (response: any) => {
+        console.log(response);
         // Store token on successful register
-        console.log(response, "rtk register");
-        localStorage.setItem("token", response.token);
+        const userInfo = JSON.stringify(response.data);
+        localStorage.setItem("authToken", response.token);
+        localStorage.setItem("userInfo", userInfo);
         return response;
       },
       invalidatesTags: ["Auth"],
     }),
 
-    signIn: builder.mutation({
+    signIn: builder.mutation<void, SignInInput>({
       query: (credentials) => ({
         url: "/auth/login",
         method: "POST",
         body: credentials,
       }),
-      transformResponse: (response) => {
-        // Store token on successful login
+      transformResponse: (response: any) => {
         console.log(response, "rtk login");
-        localStorage.setItem("token", response.token);
+        // Store token on successful login
+        const userInfo = JSON.stringify(response.data);
+        localStorage.setItem("authToken", response.token);
+        localStorage.setItem("userInfo", userInfo);
         return response;
       },
       invalidatesTags: ["Auth"],

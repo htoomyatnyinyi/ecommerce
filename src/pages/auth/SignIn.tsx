@@ -1,7 +1,10 @@
 import { useSignInMutation } from "@/redux/api/auth/authApi";
 import React, { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn: React.FC = () => {
+  const navigate = useNavigate();
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -23,13 +26,15 @@ const SignIn: React.FC = () => {
 
     console.log("email", email, "passwrod", password);
 
-    const {data} : { data?: { success: boolean } } = await signIn({ email, password });
-    if (data?.success) {
-      emailRef.current?.value;
-      passwordRef.current?.value;
-    } else {
-      console.log(data, " return data");
-    }
+    const { data }: any = await signIn({ email, password });
+    console.log(data, "return dat");
+    data?.success ? navigate("/products") : navigate("/auth/signin");
+    // if (data?.success && !data) {
+    //   emailRef.current?.value;
+    //   passwordRef.current?.value;
+    // } else {
+    //   console.log(data, " return data");
+    // }
   };
 
   return (
@@ -59,6 +64,12 @@ const SignIn: React.FC = () => {
 
         <button type="submit">Submit</button>
       </form>
+      <p className="p-2 m-1 ">
+        Oop! I do not have an account, I will click here ...
+        <Link to="/auth/signup" className="underline">
+          Register New Account
+        </Link>
+      </p>
     </div>
   );
 };
