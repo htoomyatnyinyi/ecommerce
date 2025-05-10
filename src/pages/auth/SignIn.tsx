@@ -23,12 +23,13 @@ const SignIn: React.FC = () => {
 
     console.log("email", email, "passwrod", password);
 
-    const { data } = await signIn({ email, password });
+    const {data} : { data?: { success: boolean } } = await signIn({ email, password });
     if (data?.success) {
       emailRef.current?.value;
       passwordRef.current?.value;
+    } else {
+      console.log(data, " return data");
     }
-    console.log(data, " return data");
   };
 
   return (
