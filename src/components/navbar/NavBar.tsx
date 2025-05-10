@@ -52,12 +52,12 @@ const NavBar: React.FC = () => {
             >
               STORE
             </Link>
-            <Link
+            {/* <Link
               to="/cart"
               className="hover:text-primary-500 transition-colors"
             >
               SHOPPING_CART
-            </Link>
+            </Link> */}
             {userInfo && (
               <Link
                 to="/dashboard"
@@ -88,6 +88,12 @@ const NavBar: React.FC = () => {
                   </Link>
                 </li>
                 <li>
+                  <Link
+                    to="/cart"
+                    className="hover:text-primary-500 transition-colors"
+                  >
+                    CART
+                  </Link>
                   <ThemeToggle />
                 </li>
               </ul>
@@ -111,6 +117,12 @@ const NavBar: React.FC = () => {
                 >
                   Logout
                 </button>
+                <Link
+                  to="/cart"
+                  className="hover:text-primary-500 transition-colors"
+                >
+                  CART
+                </Link>
                 <ThemeToggle />
               </div>
             )}

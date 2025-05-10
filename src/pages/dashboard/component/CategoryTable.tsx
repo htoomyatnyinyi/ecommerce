@@ -14,7 +14,8 @@ const CategoryTable = ({ categories, loading }: CategoryTableProps) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+        <thead className="">
+          {/* menu bar */}
           <tr>
             <th
               scope="col"
@@ -30,7 +31,7 @@ const CategoryTable = ({ categories, loading }: CategoryTableProps) => {
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-200">
           {categories.map((category) => (
             <tr key={category.id}>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -43,9 +44,7 @@ const CategoryTable = ({ categories, loading }: CategoryTableProps) => {
                     />
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">
-                      {category.name}
-                    </div>
+                    <div className="text-sm font-medium ">{category.name}</div>
                   </div>
                 </div>
               </td>

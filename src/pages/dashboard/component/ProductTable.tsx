@@ -14,7 +14,8 @@ const ProductTable = ({ products, loading }: ProductTableProps) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-gray-50">
+        <thead className="">
+          {/* status bar */}
           <tr>
             <th
               scope="col"
@@ -48,7 +49,7 @@ const ProductTable = ({ products, loading }: ProductTableProps) => {
             </th>
           </tr>
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-200">
           {products.map((product) => (
             <tr key={product.id}>
               <td className="px-6 py-4 whitespace-nowrap">
@@ -61,9 +62,7 @@ const ProductTable = ({ products, loading }: ProductTableProps) => {
                     />
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">
-                      {product.name}
-                    </div>
+                    <div className="text-sm font-medium ">{product.name}</div>
                     <div className="text-sm text-gray-500">
                       {product.description}
                     </div>
@@ -80,14 +79,14 @@ const ProductTable = ({ products, loading }: ProductTableProps) => {
                     />
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-sm font-medium ">
                       {product.category.name}
                     </div>
                   </div>
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
+                <div className="text-sm ">
                   {product.stock.reduce((sum, item) => sum + item.stock, 0)}
                 </div>
                 <div className="text-sm text-gray-500">
@@ -95,7 +94,7 @@ const ProductTable = ({ products, loading }: ProductTableProps) => {
                 </div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
+                <div className="text-sm ">
                   ${product.stock[0]?.price.toFixed(2) || "N/A"}
                 </div>
               </td>

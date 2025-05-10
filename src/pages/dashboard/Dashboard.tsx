@@ -17,6 +17,7 @@ const Dashboard = () => {
   // Calculate statistics
   const totalProducts = products.length;
   const totalCategories = categories.length;
+
   const totalStock = products.reduce((sum, product) => {
     return (
       sum + product.stock.reduce((stockSum, item) => stockSum + item.stock, 0)
@@ -26,9 +27,7 @@ const Dashboard = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">
-          E-Commerce Dashboard
-        </h1>
+        <h1 className="text-3xl font-bold ">E-Commerce Dashboard</h1>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -37,7 +36,7 @@ const Dashboard = () => {
         <StatsCard title="Total Stock" value={totalStock} icon="📊" />
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden mb-8">
+      <div className=" rounded-lg shadow overflow-hidden mb-8">
         <div className="border-b border-gray-200">
           <nav className="flex -mb-px">
             <button
