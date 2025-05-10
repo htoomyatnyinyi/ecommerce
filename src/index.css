@@ -3,6 +3,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* styles/globals.css or your component CSS module */
+.bg-hero {
+  background-image: url("/src/assets/logo.png"); /* adjust the path if needed */
+  background-size: cover;
+  background-position: center;
+}
+
 /* 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -283,5 +290,8 @@ button:focus-visible {
   }
   body {
     @apply bg-background text-foreground;
+  }
+  hmnn {
+    @apply hover:shadow-xl transition duration-300 p-5 rounded-lg border;
   }
 }
