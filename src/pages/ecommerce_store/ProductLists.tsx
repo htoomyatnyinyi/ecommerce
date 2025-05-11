@@ -134,7 +134,8 @@ const ProductLists = () => {
                             {productDetails?.stock.map((stockItem) => (
                               <li key={stockItem.sku} className="text-sm">
                                 SKU: {stockItem.sku}, Size: {stockItem.size},
-                                Price: ${stockItem.price.toFixed(2)}
+                                Stock: {stockItem.stock} Pcs, Price: $
+                                {stockItem.price.toFixed(2)}
                               </li>
                             ))}
                           </ul>
