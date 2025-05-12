@@ -42,7 +42,7 @@ function classNames<T>(...classes: T[]) {
 }
 
 export default function ProductQuickView() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
 

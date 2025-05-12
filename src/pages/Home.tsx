@@ -1,9 +1,11 @@
 import React from "react";
 import logo from "@/assets/logo.png";
+import AboutUs from "./AboutUs";
 
 const Home: React.FC = () => {
   return (
     <div className="overflow-x-hidden">
+      <AboutUs />
       {/* Hero Section */}
       <section className="grid place-items-center text-center h-screen bg-hero bg-cover bg-center px-4">
         <div className="w-full max-w-4xl space-y-10 p-5 rounded-lg backdrop-blur-sm bg-gradient-to-r from-white to-black bg-clip-text text-transparent hover:shadow-xl transition duration-300">
